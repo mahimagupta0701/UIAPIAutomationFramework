@@ -8,7 +8,7 @@ import io.cucumber.junit.CucumberOptions;
 @CucumberOptions(
         features = "src/test/resources/features",
 glue = {"apistepdefinitions", "hooks"},
-tags = "@debug", // 👈 Run only scenarios with @debug
+tags = "@debug", // 👈 Run only scenarios with annotation @debug
 plugin = { "pretty", "html:target/cucumber-reports/cucumber.html" },
 monochrome = true
 )
