@@ -1,0 +1,18 @@
+{
+  "id": 10,
+  "name": "{{name}}",
+  "category": {
+    "id": 1,
+    "name": "{{category}}"
+  },
+  "photoUrls": [
+    "{{photoUrl}}"
+  ],
+  "tags": [
+    {
+      "id": 0,
+      "name": "{{tag}}"
+    }
+  ],
+  "status": "{{status}}"
+}
