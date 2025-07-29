@@ -110,6 +110,12 @@ cd UIAPIAutomationFramework
 # Run the tests
 mvn clean install
 
+# Report
+target/cucumber-reports/cucumber.html
+
+#screenshot
+test-output/screenshots
+
 
 
 

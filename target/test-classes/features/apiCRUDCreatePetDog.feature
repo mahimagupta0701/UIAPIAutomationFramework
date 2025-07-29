@@ -1,3 +1,4 @@
+@test
 Feature: Petstore API Testing
 
   Scenario: Create a new pet
