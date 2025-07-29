@@ -13,10 +13,14 @@ public class PostPage {
     WebDriver driver;
     WaitHelper wait;
     String thumbnail= "";
+    //WebElement editableDiv;
+    //WebElement saveButton;
+    //WebElement descriptionTab;
+    //WebElement deleteButton;
     public PostPage(WebDriver driver) {
         this.driver = driver;
-
         this.wait = new WaitHelper(driver);
+
     }
 
     // ----- Update these locators here -----
@@ -33,14 +37,12 @@ public class PostPage {
     By salesField = By.xpath("//input[@name='sales']");
     By categoryDropdown = By.xpath("//input[@name='category']");
     By descriptionField = By.id("description");
-
+    By editableDiv = By.xpath("//div[@class='ProseMirror']//br[@class='ProseMirror-trailingBreak']");
     By DetailsButton = By.xpath("//a[@id='tabheader-details' and text()='Details']");
     By referenceld = By.xpath("//input[@name='reference']");
-    WebElement editableDiv = driver.findElement(By.cssSelector("div.ProseMirror[contenteditable='true']"));
-    WebElement saveButton = driver.findElement(By.xpath("//button[@aria-label='Save']"));
-
-    WebElement descriptionTab = driver.findElement(By.id("tabheader-description"));
-    WebElement deleteButton = driver.findElement(By.xpath("//button[@aria-label='Delete']"));
+    By saveButton = By.xpath("//button[@type='submit' and @aria-label='Save']");
+    By descriptionTab = By.xpath("//a[@id='tabheader-description']");
+    By deleteButton = By.xpath("//button[@aria-label='Delete']");
 
 
     public void navigateToPosts() {
@@ -60,7 +62,7 @@ public class PostPage {
     }
 
     public void enterReferences(String ref) {
-        wait.waitForVisibility(referenceld).clear();
+        //wait.waitForVisibility(referenceld).clear();
         driver.findElement(referenceld).sendKeys(ref);
 
     }
@@ -97,17 +99,22 @@ public class PostPage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//ul[@role='listbox']")));
 */
         // Select the category by data-value or text (e.g., "water")
-        WebElement categoryOption = driver.findElement(By.xpath("//li[@role='option' and (@data-value='12' or normalize-space(text())='" + category.toLowerCase() + "')]"));
+        WebElement categoryOption = driver.findElement(By.xpath("//li[@role='option' and normalize-space()='water']"));
         categoryOption.click();
-        descriptionTab.click();
+
+
+        wait.waitForClickability(descriptionTab).click();
     }
 
     public void enterDescription(String desc) {
-        editableDiv.sendKeys(desc);
+        wait.waitForClickability(editableDiv).sendKeys(desc);
+
+
     }
 
     public void submitForm() {
-        saveButton.click();
+
+        wait.waitForClickability(saveButton).click();
     }
 
     public void clickonPosterAndVerifyCreatedPoster(String refrence) {
@@ -115,7 +122,7 @@ public class PostPage {
 
     }
     public String VerifThumbNail(){
-        driver.findElement(referenceField).getText();
+        thumbnail = driver.findElement(referenceField).getAttribute("value");
         return  thumbnail;
     }
 
@@ -126,9 +133,7 @@ public class PostPage {
 
     }
     public void deletePoster() {
-
-        deleteButton.click();
-
+        wait.waitForClickability(deleteButton).click();
     }
 
 

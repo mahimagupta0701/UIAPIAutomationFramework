@@ -14,11 +14,9 @@ import utils.WaitHelper;
 import utils.WebDriverHelper;
 
 public class PostManagementSteps {
-
-
-    WebDriver driver = Hooks.driver;
+    static WebDriver driver = Hooks.driver;
     LoginPage loginPage = new LoginPage(Hooks.driver);
-    PostPage postPage = new PostPage(Hooks.driver);
+     PostPage postPage = new PostPage(Hooks.driver);
     WaitHelper waitHelper =  waitHelper = new WaitHelper(Hooks.driver);
 /*
     @Before
@@ -35,39 +33,41 @@ public class PostManagementSteps {
     public void enterReferenceAndImage(String reference, String image) {
         postPage.clickCreate();
         postPage.enterReference(reference,image);
+        WebDriverHelper.takeScreenshot("RefrencePage");
 
     }
 
     @And("I provide additional inputs: height {string}, width {string}, price {string}, stock {string}, sales {string}, category {string}, reference {string}")
     public void enterMoreDetails(String height, String width, String price, String stock, String sales, String category, String reference) {
+        postPage.enterReferences(reference);
         postPage.enterHeight(height);
         postPage.enterWidth(width);
         postPage.enterPrice(price);
         postPage.enterStock(stock);
         postPage.enterSales(sales);
         postPage.selectCategory(category);
-        postPage.enterReferences(reference);
+        WebDriverHelper.takeScreenshot("AdditionalInformaiton");
+        //postPage.enterReferences(reference);
     }
-    @And("I enter description {string}")
-    public void enterDescription(String description) {
-        postPage.enterDescription(description);
-    }
+
     @When("I submit the post")
     public void submitPost() {
         postPage.submitForm();
+        WebDriverHelper.takeScreenshot("Submittion");
     }
 
     @Then("I should see {string} in the list")
     public void i_should_see_reference_in_the_list(String reference) {
-        postPage.clickonPosterAndVerifyCreatedPoster(reference);
 
         String isPresent = postPage.VerifThumbNail();
-        Assert.assertEquals("Reference '" + reference + "' was not found in the list.", isPresent);
+        Assert.assertTrue(isPresent.contains(reference));
+        WebDriverHelper.takeScreenshot("AssetionPassed");
     }
 
     @Then("I delete the poster")
     public void i_delete_the_poster() {
         postPage.deletePoster();
+
     }
 
 
